@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Course Configuration Schema",
+  "description": "JSON Schema for course configuration entries in course-repo",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique course identifier in kebab-case",
+      "pattern": "^[a-z0-9]([a-z0-9-]{0,48}[a-z0-9])?$",
+      "maxLength": 50
+    },
+    "title": {
+      "type": "string",
+      "description": "Course display title",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "type": {
+      "type": "string",
+      "description": "Entry type - must be 'course'",
+      "enum": ["course"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed course description",
+      "minLength": 10,
+      "maxLength": 2000
+    },
+    "author": {
+      "type": "string",
+      "description": "Course author or instructor name",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "thumbnail": {
+      "type": "string",
+      "description": "Course thumbnail image - local path or URL",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "tags": {
+      "type": "array",
+      "description": "Course topic tags and keywords",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      },
+      "minItems": 1,
+      "maxItems": 20,
+      "uniqueItems": true
+    },
+    "repository": {
+      "type": "object",
+      "description": "GitHub repository information",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "GitHub repository owner/username",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "name": {
+          "type": "string",
+          "description": "GitHub repository name",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "branch": {
+          "type": "string",
+          "description": "Git branch containing course content",
+          "minLength": 1,
+          "maxLength": 100,
+          "default": "main"
+        }
+      },
+      "required": ["owner", "name", "branch"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "type",
+    "description",
+    "author",
+    "thumbnail",
+    "tags",
+    "repository"
+  ],
+  "additionalProperties": false
+}
